@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: jobizz-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: jobizz
+      POSTGRES_USER: jobizz
+      POSTGRES_PASSWORD: jobizz
+    ports:
+      - "5432:5432"
+    volumes:
+      - jobizz_pgdata:/var/lib/postgresql/data
+
+volumes:
+  jobizz_pgdata:
