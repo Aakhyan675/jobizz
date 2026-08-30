@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { jobsApi } from "../services/endpoints";
 import { JobCard } from "../components/JobCard";
+import { JobizzHeroBanner } from "../components/JobizzHeroBanner";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
-import { Spinner } from "../components/States";
+import { EmptyState, Spinner } from "../components/States";
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ export function HomePage() {
           </div>
         </div>
       </section>
+      <JobizzHeroBanner />
       <section className="container-page py-14">
         <div className="mb-6 flex items-end justify-between">
           <div>
@@ -62,9 +64,11 @@ export function HomePage() {
         </div>
         {isLoading ? (
           <Spinner />
+        ) : !data?.results.length ? (
+          <EmptyState title="No jobs yet" body="No openings are live right now — check back soon or browse all jobs." />
         ) : (
           <div className="grid gap-4 md:grid-cols-2">
-            {data?.results.map((job) => (
+            {data.results.map((job) => (
               <JobCard key={job.id} job={job} />
             ))}
           </div>
